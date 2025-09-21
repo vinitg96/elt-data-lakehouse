@@ -1,5 +1,5 @@
 # Data Lakehouse Moderno
-Este projeto demonstra um pipeline ELT em um Data Lakehouse moderno local explorando boas práticas de engenharia de dados e ferramentas open source.
+Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boas práticas de engenharia de dados e ferramentas open source.
 # Arquitetura Local
 
 - MinIO → utilizado como storage simulando o papel de um Data Lake.
