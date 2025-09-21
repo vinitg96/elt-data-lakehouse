@@ -43,11 +43,11 @@ services:
 
   metaduck:
     build:
-      context: ./services/metabase
-      dockerfile: metabase_duckdb.dockerfile
+      context: .
+      dockerfile: ./services/metabase/metabase_duckdb.dockerfile
     image: metaduck_img
     volumes:
-      - ./datawarehouse/dw.duckdb:/datawarehouse/dw.duckdb
+      - ./services/dbt_workflow/datawarehouse/:/app/datawarehouse/
     ports:
       - '80:3000'
     environment:
