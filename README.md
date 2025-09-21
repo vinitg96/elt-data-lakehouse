@@ -1,7 +1,5 @@
 # Data Lakehouse Moderno
-
-Este projeto tem como objetivo demonstrar a arquitetura de um Data Lakehouse moderno em um ambiente local, explorando boas práticas de engenharia de dados e ferramentas open source.
-
+Este projeto demonstra um pipeline ELT em um Data Lakehouse moderno local explorando boas práticas de engenharia de dados e ferramentas open source.
 # Arquitetura Local
 
 - MinIO → utilizado como storage simulando o papel de um Data Lake.
@@ -29,12 +27,14 @@ Este projeto tem como objetivo demonstrar a arquitetura de um Data Lakehouse mod
 2. Suba os serviços com o Docker Compose:
     ```
     docker compose up
-3. Acesse a aplicação em: http://localhost:8080
+3. Acesse as aplicações:
+- Metabase: http://localhost:8080
+- MinIO Console: http://localhost:9001
 \
 <br>
 
 # Próximos Passos
-- Implementação de testes e documentação dos modelos SQL com o dbt
+- Implementar testes e documentação dos modelos SQL com o dbt
 
 - Migrar arquitetura para nuvem usando os seguintes serviços:
     - S3 como storage (lake)
