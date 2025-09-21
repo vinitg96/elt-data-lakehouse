@@ -10,4 +10,4 @@ wheels/
 .venv
 
 anotacoes.txt
-dw.duckdb
+*.duckdb
