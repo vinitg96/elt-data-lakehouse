@@ -30,7 +30,9 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 3. Acesse as aplicações:
 - Metabase: http://localhost:80
 - MinIO Console: http://localhost:9001
-\
+    - usuario: minio123
+    - senha: minio123
+
 <br>
 
 # Próximos Passos
