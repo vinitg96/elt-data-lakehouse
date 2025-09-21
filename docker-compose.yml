@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      #- ./minio:/data
+      - minio_internal_data:/data
+    environment:
+      - MINIO_ROOT_USER=minio123
+      - MINIO_ROOT_PASSWORD=minio123
+    command: minio server /data --console-address ":9001"
+  
+  mc:
+    image: minio/mc
+    volumes:
+      - ./data/:/data/raw/
+      - ./utils/buckets_config.sh:/scripts/setup.sh
+
+    entrypoint: /bin/bash /scripts/setup.sh
+    container_name: mc
+    depends_on:
+      - minio
+  
+  python-dbt: #https://www.reddit.com/r/learnpython/comments/1hspt62/installing_dependencies_with_uv_sync_systemwide/?tl=pt-br
+    build:
+      context: .
+      dockerfile: ./services/dbt_workflow/python-dbt.dockerfile
+    image: python-dbt-img
+    volumes:
+      - ./services/dbt_workflow/datawarehouse/:/app/datawarehouse/
+    container_name: python_dbt
+    environment:
+      - S3_ENDPOINT=minio:9000  #rede do container
+      - S3_ACCESS_KEY=minio123
+      - S3_SECRET_KEY=minio123
+    depends_on:
+      - minio
+
+  metaduck:
+    build:
+      context: .
+      dockerfile: ./metabase_duckdb.dockerfile
+    image: metaduck_img
+    volumes:
+      - ./datawarehouse/dw.duckdb:/datawarehouse/dw.duckdb
+    ports:
+      - '80:3000'
+    environment:
+      - MB_PLUGINS_DIR=/home/plugins
+      - MB_DB_TYPE=postgres
+      - MB_DB_DBNAME=postgres
+      - MB_DB_PORT=5432
+      - MB_DB_USER=postgres
+      - MB_DB_PASS=1234
+      - MB_DB_HOST=postgres #nome do serviços
+    mem_limit: 2g
+    container_name: metaduck
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ #volume nomeado
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    container_name: postgres_metabase
+
+#named volumes    
+volumes:
+  postgres_data:
+    name: 'postgres_metabase_volume'
+    driver: local
+  minio_internal_data:
+    name: 'minio_internal_volume'
+    driver: 'local' 
+
+# Docker cria e gerencia este volume 
+#volume nomeado - docker gerencia - ideal para db/arquivos internos que usuario nao precisa manipular, 
+# não tem prob permissao no host
+#. Bind mount eu gerencio (passo local do host) 
+
+
+      
+
+
+    

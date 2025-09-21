@@ -1,8 +1,8 @@
 FROM python:3.13-slim-bookworm
 
 WORKDIR /app
-
-COPY ./dbt_workflow/ /app/dbt_workflow/
+#COPY -> relativo contexto do container (./services/dbt_workflow/)
+COPY ./services/dbt_workflow/ /app/dbt_workflow/   
 COPY ./uv.lock /app/uv.lock
 COPY ./pyproject.toml /app/pyproject.toml
 
