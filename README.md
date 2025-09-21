@@ -22,8 +22,8 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse moderno local explor
 1. Clone este repositório:
 
    ```
-   git clone 
-   cd
+   git clone https://github.com/vinitg96/elt-data-lakehouse.git
+   cd elt-data-lakehouse
 2. Suba os serviços com o Docker Compose:
     ```
     docker compose up
