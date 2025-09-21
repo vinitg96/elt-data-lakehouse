@@ -1,0 +1,26 @@
+version: 2
+
+
+sources:
+  - name: bronze
+    tables:
+      - name: cust_info
+        config:
+          external_location: "s3://crm/cust_info.csv"
+      - name: prd_info
+        config:
+          external_location: "s3://crm/prd_info.csv"
+      - name: sales_details
+        config:
+          external_location: "s3://crm/sales_details.csv"
+      - name: CUST_AZ12
+        config:
+          external_location: "s3://erp/CUST_AZ12.csv"
+      - name: LOC_A101
+        config:
+          external_location: "s3://erp/LOC_A101.csv"
+      - name: PX_CAT_G1V2
+        config:
+          external_location: "s3://erp/PX_CAT_G1V2.csv"
+
+

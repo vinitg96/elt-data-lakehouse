@@ -1,0 +1,1 @@
+SELECT * FROM read_csv({{source('bronze', 'sales_details')}}, all_varchar='true')

@@ -1,0 +1,26 @@
+dbt_workflow:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ./datawarehouse/dw.duckdb
+      extensions: 
+        - httpfs
+      settings:
+        s3_endpoint: "{{ env_var('S3_ENDPOINT', 'http://localhost:9000') }}"
+        s3_access_key_id: "{{ env_var('S3_ACCESS_KEY', 'minio123') }}"
+        s3_secret_access_key: "{{ env_var('S3_SECRET_KEY', 'minio123') }}"
+        #s3_endpoint: 'localhost:9000'
+        #s3_access_key_id: 'minio123'
+        #s3_secret_access_key: 'minio123'
+        s3_region: 'us-east-1'
+        s3_url_style: 'path'
+        s3_use_ssl: false
+      threads: 1
+
+    prod:
+      type: duckdb
+      path: prod.duckdb
+      threads: 4
+
+#evita erro dentro do conrainer, nao aponta para localhost
