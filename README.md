@@ -28,10 +28,13 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
     ```
     docker compose up
 3. Acesse as aplicações:
-- Metabase: http://localhost:80
+- Metabase: http://localhost:80 - O serviço do metabase leva alguns segundos para ficar disponível após a criação do containers
+    - Na seção 4 do setup inicial ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** preencha o caminho **/app/datawarehouse/dw.duckdb**
 - MinIO Console: http://localhost:9001
     - usuario: minio123
     - senha: minio123
+
+*Ambos os serviços fazem usos de serviços nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir em disco mesmo com o container sendo removido ou desligado*
 
 <br>
 
