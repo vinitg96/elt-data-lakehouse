@@ -84,10 +84,7 @@ volumes:
     name: 'minio_internal_volume'
     driver: 'local' 
 
-# Docker cria e gerencia este volume 
-#volume nomeado - docker gerencia - ideal para db/arquivos internos que usuario nao precisa manipular, 
-# não tem prob permissao no host
-#. Bind mount eu gerencio (passo local do host) 
+
 
 
       
