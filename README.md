@@ -28,7 +28,7 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
     ```
     docker compose up
 3. Acesse as aplicações:
-- Metabase: http://localhost:8080
+- Metabase: http://localhost:80
 - MinIO Console: http://localhost:9001
 \
 <br>
