@@ -1,7 +1,7 @@
 	SELECT
 			prd_id,
-			REPLACE(SUBSTRING(prd_key, 1, 5), '-', '_') AS cat_id, -- Extract category ID
-			SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,        -- Extract product key
+			REPLACE(SUBSTRING(prd_key, 1, 5), '-', '_') AS cat_id, 
+			SUBSTRING(prd_key, 7, LEN(prd_key)) AS prd_key,        
 			prd_nm,
 			COALESCE(CAST(prd_cost AS float), 0) AS prd_cost,
 			CASE 
@@ -15,5 +15,5 @@
 			CAST(
 				LEAD(CAST(prd_start_dt AS DATE)) OVER (PARTITION BY prd_key ORDER BY CAST(prd_start_dt AS DATE)) - 1 
 				AS DATE
-			) AS prd_end_dt -- Calculate end date as one day before the next start date
+			) AS prd_end_dt 
 		FROM {{ref('bronze_crm_prd_info')}}

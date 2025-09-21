@@ -1,5 +1,5 @@
 SELECT
-    ROW_NUMBER() OVER (ORDER BY pn.prd_start_dt, pn.prd_key) AS product_key, -- Surrogate key
+    ROW_NUMBER() OVER (ORDER BY pn.prd_start_dt, pn.prd_key) AS product_key, 
     pn.prd_id       AS product_id,
     pn.prd_key      AS product_number,
     pn.prd_nm       AS product_name,
@@ -13,4 +13,4 @@ SELECT
 FROM {{ref('silver_crm_prd_info')}} pn
 LEFT JOIN {{ref('silver_erp_px_cat_g1v2')}}  pc
     ON pn.cat_id = pc.id
-WHERE pn.prd_end_dt IS NULL -- Filter out all historical data
+WHERE pn.prd_end_dt IS NULL 

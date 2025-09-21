@@ -20,7 +20,7 @@ SELECT
             OR CAST(sls_sales AS FLOAT) != CAST(sls_quantity AS INT) * ABS(CAST(sls_price AS FLOAT)) 
         THEN CAST(sls_quantity AS INT) * ABS(CAST(sls_price AS FLOAT))
         ELSE CAST(sls_sales AS FLOAT)
-    END AS sls_sales, -- Recalculate sales if original value is missing or incorrect
+    END AS sls_sales, 
     CAST(sls_quantity AS INT) AS sls_quantity,
     CASE 
         WHEN sls_price IS NULL OR CAST(sls_price AS FLOAT) <= 0 
