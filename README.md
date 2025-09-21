@@ -36,8 +36,6 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 
 *Ambos os serviços fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com o container sendo removido ou desligado*
 
-<br>
-
 # Próximos Passos
 - Implementar testes e documentação dos modelos SQL com o dbt
 
