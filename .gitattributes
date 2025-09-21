@@ -1,0 +1,2 @@
+# força arquivos .sql a serem reconhecidos como SQL
+*.sql linguist-language=SQL
