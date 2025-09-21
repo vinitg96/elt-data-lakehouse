@@ -43,8 +43,8 @@ services:
 
   metaduck:
     build:
-      context: .
-      dockerfile: ./metabase_duckdb.dockerfile
+      context: ./services/metabase
+      dockerfile: metabase_duckdb.dockerfile
     image: metaduck_img
     volumes:
       - ./datawarehouse/dw.duckdb:/datawarehouse/dw.duckdb
