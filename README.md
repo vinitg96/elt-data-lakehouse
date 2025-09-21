@@ -40,7 +40,7 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 
 # Próximos Passos
 - Implementar testes e documentação dos modelos SQL com o dbt
-
+- Melhorar logs
 - Migrar arquitetura para nuvem usando os seguintes serviços:
     - S3 como storage (lake)
     - Motherduck: substitui o duckDB como warehouse eliminando o problema da concorrencia
