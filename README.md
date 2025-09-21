@@ -34,7 +34,7 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
     - usuario: minio123
     - senha: minio123
 
-*Ambos os serviços fazem usos de serviços nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir em disco mesmo com o container sendo removido ou desligado*
+*Ambos os serviços fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com o container sendo removido ou desligado*
 
 <br>
 
