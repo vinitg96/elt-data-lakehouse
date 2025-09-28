@@ -15,31 +15,6 @@ services:
       - MINIO_ROOT_PASSWORD=minio123
     command: minio server /data --console-address ":9001"
   
-  mc:
-    image: minio/mc
-    volumes:
-      - ./data/:/data/raw/
-      - ./utils/buckets_config.sh:/scripts/setup.sh
-
-    entrypoint: /bin/bash /scripts/setup.sh
-    container_name: mc
-    depends_on:
-      - minio
-  
-  python-dbt: #https://www.reddit.com/r/learnpython/comments/1hspt62/installing_dependencies_with_uv_sync_systemwide/?tl=pt-br
-    build:
-      context: .
-      dockerfile: ./services/dbt_workflow/python-dbt.dockerfile
-    image: python-dbt-img
-    volumes:
-      - ./services/dbt_workflow/datawarehouse/:/app/datawarehouse/
-    container_name: python_dbt
-    environment:
-      - S3_ENDPOINT=minio:9000  #rede do container
-      - S3_ACCESS_KEY=minio123
-      - S3_SECRET_KEY=minio123
-    depends_on:
-      - minio
 
   metaduck:
     build:
@@ -74,6 +49,19 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
     container_name: postgres_metabase
+
+  airflow:
+    build:
+      context:
+        ./services/airflow/
+    environment:
+      - S3_ENDPOINT=minio:9000  #rede do container
+      - S3_ACCESS_KEY=minio123 #settings dbt
+      - S3_SECRET_KEY=minio123
+    volumes:
+      - ./services/dbt_workflow/:/app/dbt_workflow/ #volume bind
+      - ./data/:/data/raw/
+
 
 #named volumes    
 volumes:
