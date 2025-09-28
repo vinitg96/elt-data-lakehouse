@@ -43,7 +43,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/ #volume nomeado
     ports:
-      - '5432:5432'
+      - '5433:5432' #host:container
     environment:
       - POSTGRES_PASSWORD=1234
       - POSTGRES_USER=postgres
