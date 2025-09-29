@@ -3,7 +3,7 @@ dbt_workflow:
   outputs:
     dev:
       type: duckdb
-      path: /app/datawarehouse/dw.duckdb
+      path: /usr/local/airflow/include/dbt_workflow/dw.duckdb
       extensions: 
         - httpfs
       settings:

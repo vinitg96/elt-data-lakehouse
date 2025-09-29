@@ -1,0 +1,10 @@
+version: "3.1"
+services:
+  # ESSENCIAL - onde as tarefas são executadas
+  scheduler:
+    volumes:
+      - ../dbt_workflow/:/usr/local/airflow/include/dbt_workflow/ #volume bind
+      - ../../data/:/usr/local/airflow/include/data/
+      - ../../utils/ingestao.py:/usr/local/airflow/include/ingestao.py
+
+

@@ -14,6 +14,8 @@ services:
       - MINIO_ROOT_USER=minio123
       - MINIO_ROOT_PASSWORD=minio123
     command: minio server /data --console-address ":9001"
+    networks:
+      - airflow_c68a6d_airflow  # Conecta à rede do Astro
   
 
   metaduck:
@@ -37,6 +39,8 @@ services:
     container_name: metaduck
     depends_on:
       - postgres
+    networks:
+      - airflow_c68a6d_airflow  # Conecta à rede do Astro
 
   postgres:
     image: postgres
@@ -49,18 +53,26 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
     container_name: postgres_metabase
+    networks:
+      - airflow_c68a6d_airflow  # Conecta à rede do Astro
 
-  airflow:
-    build:
-      context:
-        ./services/airflow/
-    environment:
-      - S3_ENDPOINT=minio:9000  #rede do container
-      - S3_ACCESS_KEY=minio123 #settings dbt
-      - S3_SECRET_KEY=minio123
-    volumes:
-      - ./services/dbt_workflow/:/app/dbt_workflow/ #volume bind
-      - ./data/:/data/raw/
+  # airflow:
+  #   build:
+  #     context:
+  #       ./services/airflow/
+  #   environment:
+  #     - S3_ENDPOINT=minio:9000  #rede do container
+  #     - S3_ACCESS_KEY=minio123 #settings dbt
+  #     - S3_SECRET_KEY=minio123
+  #     #- PYTHONPATH=/app:$PYTHONPATH #conseguir rodar ingestao que esta dentro de /app
+  #   volumes:
+  #     - ./services/dbt_workflow/:/app/dbt_workflow/ #volume bind
+  #     - ./data/:/data/raw/
+  #     - ./utils/ingestao.py:/app/ingestao.py
+  #     # - ./services/airflow/dags/:/opt/airflow/dags/
+      
+
+  #   container_name: airflow_minio_dbt_metabase 
 
 
 #named volumes    
@@ -70,7 +82,12 @@ volumes:
     driver: local
   minio_internal_data:
     name: 'minio_internal_volume'
-    driver: 'local' 
+    driver: 'local'
+
+# Usar a rede criada pelo Astro CLI
+networks:
+  airflow_c68a6d_airflow:
+    external: true 
 
 
 

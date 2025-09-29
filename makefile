@@ -1,5 +1,5 @@
-mudar para diretorio do airflow
+infra:
+	docker compose up -d
 
-
-astro dev init
-astro dev start
+airflow:
+	cd services/airflow && astro dev start
