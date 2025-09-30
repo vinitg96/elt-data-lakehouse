@@ -1,7 +1,7 @@
 # Astro Runtime includes the following pre-installed providers packages: https://www.astronomer.io/docs/astro/runtime-image-architecture#provider-packages
 # dbt
-dbt-core>=1.5.0
-dbt-duckdb>=1.5.0
+# dbt-core>=1.5.0
+# dbt-duckdb>=1.5.0
 
 # # MinIO/S3
 # minio>=7.0.0
@@ -10,3 +10,5 @@ dbt-duckdb>=1.5.0
 
 loguru>=0.7.3
 minio>=7.2.17
+# astronomer-cosmos[dbt.all]
+astronomer-cosmos

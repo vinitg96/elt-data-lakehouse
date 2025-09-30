@@ -74,12 +74,12 @@ with DAG(
     # )
 
 
-    dbt_run = BashOperator(
-        task_id="dbt_run",
-        bash_command="pwd && ls -lha && which dbt && dbt --version && dbt run",
-        env={"DBT_PROFILES_DIR": "/usr/local/airflow/include/dbt_workflow"},
-        cwd="/usr/local/airflow/include/dbt_workflow"  # garante o diretório
-)
+#     dbt_run = BashOperator(
+#         task_id="dbt_run",
+#         bash_command="pwd && ls -lha && which dbt && dbt --version && dbt run",
+#         env={"DBT_PROFILES_DIR": "/usr/local/airflow/include/dbt_workflow"},
+#         cwd="/usr/local/airflow/include/dbt_workflow"  # garante o diretório
+# )
 
-    # Definir dependências
-    ingestao_task() >> dbt_run
+#     # Definir dependências
+#     ingestao_task() >> dbt_run
