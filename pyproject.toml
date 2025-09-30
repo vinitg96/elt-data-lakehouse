@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "apache-airflow>=3.1.0",
+    "astronomer-cosmos>=1.10.2",
     "dbt>=1.0.0.40.6",
     "dbt-duckdb>=1.9.6",
     "duckdb>=1.4.0",
