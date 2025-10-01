@@ -14,8 +14,12 @@ _profile_config = ProfileConfig(profile_name="dbt_workflow",
                                 
                                 )
 
+# _execute_file_config = ExecutionConfig(
+#     dbt_executable_path=f"{DBT_PROJECT_PATH}/dbt_venv/bin/dbt"
+# )
+
 _execute_file_config = ExecutionConfig(
-    dbt_executable_path=f"{DBT_PROJECT_PATH}/dbt_venv/bin/dbt"
+    dbt_executable_path="/usr/local/airflow/dbt_venv/dbt"
 )
 
 my_dag = DbtDag(
