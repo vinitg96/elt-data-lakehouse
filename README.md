@@ -10,7 +10,11 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 
 - Metabase → ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
-- ![arquitetura Local](./misc/arquitetura_local.drawio.png)
+- Airflow -> Orquestração
+
+- Docker -> Conteinerização dos serviços 
+
+    ![arquitetura Local](./misc/arquitetura_local.drawio.png)
 
 ## Como executar  
 
