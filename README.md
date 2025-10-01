@@ -16,7 +16,8 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 
 ### Pré-requisitos  
 - [Docker](https://docs.docker.com/get-docker/)  
-- [Docker Compose](https://docs.docker.com/compose/install/)  
+- [Docker Compose](https://docs.docker.com/compose/install/) 
+- [Astronomer CLI](https://www.astronomer.io/docs/astro/cli/install-cli) 
 
 ### Passos  
 1. Clone este repositório:
@@ -24,19 +25,27 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
    ```
    git clone https://github.com/vinitg96/elt-data-lakehouse.git
    cd elt-data-lakehouse
-2. Suba os serviços com o Docker Compose:
+2. Suba o airflow:
     ```
-    docker compose up
-3. Acesse as aplicações:
-- Metabase: http://localhost:80 - O serviço do metabase leva alguns segundos para ficar disponível após a criação do container
-    - Na seção 4 do setup inicial ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** preencha o caminho **/app/datawarehouse/dw.duckdb**
+    make airflow
+3. Suba os demais serviços:
+    ```
+    make infra
+4. Execute as DAGs no airflow em http://localhost:8080
+    - Execute primeiro a DAG **extract_load_minio** e depois a DAG **transformation_dbt**
 
+5. Acesse o Metabase em http://localhost:80
+    - Na seção 4 do setup inicial ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** preencha o caminho **/app/datawarehouse/dw.duckdb**
 ![Metabase UP](./misc/metabase_up_video.gif)
-- MinIO Console: http://localhost:9001
+
+6. O MiniIO console pode ser acessado em http://localhost:9001
     - usuario: minio123
     - senha: minio123
 
-*Ambos os serviços fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com o container sendo removido ou desligado*
+
+# Observações
+- O MinIO e o banco de aplicação do Metabase (postgres) fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com os containers sendo removidos ou desligados.
+- O duckdb não permite acessos simultaneos, logo, caso queira executar a DAG **transformation_dbt** uma segunda vez, é necessário desligar o container do metabase (metaduck)
 
 # Próximos Passos
 - Implementar testes e documentação dos modelos SQL com o dbt
