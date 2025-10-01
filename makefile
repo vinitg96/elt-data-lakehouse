@@ -3,3 +3,5 @@ infra:
 
 airflow:
 	cd services/airflow && astro dev start
+
+	
