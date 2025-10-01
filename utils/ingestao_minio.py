@@ -42,10 +42,6 @@ def configure_buckets():
             client.make_bucket(bucket_name=bucket)
             logger.info(f"Bucket {bucket} criado com sucesso!")
 
-configure_buckets()
-copy_files()
-
-
 
 
 
