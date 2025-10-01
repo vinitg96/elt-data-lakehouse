@@ -5,6 +5,8 @@ services:
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
       - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
+    networks:
+    - minha_network_airflow
 
   scheduler:
     volumes:
@@ -12,6 +14,8 @@ services:
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
       - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
+    networks:
+    - minha_network_airflow
 
   triggerer:
     volumes:
@@ -19,6 +23,8 @@ services:
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
       - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
+    networks:
+    - minha_network_airflow
 
   dag-processor:
     volumes:
@@ -26,5 +32,10 @@ services:
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
       - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
+    networks:
+    - minha_network_airflow
 
-
+networks:
+  minha_network_airflow:
+    driver: bridge
+    name: airflow_network  

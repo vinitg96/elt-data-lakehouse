@@ -1,11 +1,11 @@
 from cosmos import ProjectConfig, ProfileConfig, ExecutionConfig, DbtDag
+from airflow.sensors.external_task import ExternalTaskSensor
 import os
 from datetime import datetime
 from pathlib import Path
 
 #posso apontar o profile ou usar connection do airflow para centralizar tudo
 DBT_PROJECT_PATH = "/usr/local/airflow/include/dbt_workflow"
-DBT_EXECUTABLE_PATH = os.getenv('AIRFLOW_HOME')
 
 _project_config = ProjectConfig(dbt_project_path=DBT_PROJECT_PATH)
 

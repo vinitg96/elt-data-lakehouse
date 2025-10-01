@@ -13,7 +13,7 @@ services:
       - MINIO_ROOT_PASSWORD=minio123
     command: minio server /data --console-address ":9001"
     networks:
-      - airflow_c68a6d_airflow  # Conecta à rede do Astro
+      - airflow_network  
   
 
   metaduck:
@@ -38,7 +38,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - airflow_c68a6d_airflow  # Conecta à rede do Astro
+      - airflow_network  # Conecta à rede do airflow
 
   postgres:
     image: postgres
@@ -52,7 +52,7 @@ services:
       - POSTGRES_DB=postgres
     container_name: postgres_metabase
     networks:
-      - airflow_c68a6d_airflow  # Conecta à rede do Astro
+      - airflow_network  # Conecta à rede do Astro
 
 #named volumes    
 volumes:
@@ -65,13 +65,11 @@ volumes:
 
 # Usar a rede criada pelo Astro CLI
 networks:
-  airflow_c68a6d_airflow:
+  airflow_network:
     external: true 
 
 
 
 
       
-
-
     

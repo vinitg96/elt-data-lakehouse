@@ -9,7 +9,7 @@ dbt_workflow:
       extensions: 
         - httpfs
       settings:
-        s3_endpoint: "{{ env_var('S3_ENDPOINT', 'http://localhost:9000') }}"
+        s3_endpoint: "{{ env_var('S3_ENDPOINT', 'minio:9000') }}"
         s3_access_key_id: "{{ env_var('S3_ACCESS_KEY', 'minio123') }}"
         s3_secret_access_key: "{{ env_var('S3_SECRET_KEY', 'minio123') }}"
         #s3_endpoint: 'localhost:9000'
@@ -18,7 +18,7 @@ dbt_workflow:
         s3_region: 'us-east-1'
         s3_url_style: 'path'
         s3_use_ssl: false
-      threads: 3
+      threads: 4
 
     prod:
       type: duckdb

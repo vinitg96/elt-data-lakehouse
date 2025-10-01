@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from loguru import logger
 
-client = Minio(endpoint=os.getenv("S3_ENDPOINT", "localhost:9000"),
+client = Minio(endpoint=os.getenv("S3_ENDPOINT", "minio:9000"),
                secret_key=os.getenv("S3_SECRET_KEY", "minio123"),
                access_key=os.getenv("S3_ACCESS_KEY", "minio123"),
                secure=False)
