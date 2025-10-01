@@ -1,29 +1,30 @@
-version: "3.1"
-
 services:
   api-server:
     volumes:
       - ../dbt_workflow:/usr/local/airflow/include/dbt_workflow:rw
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
+      - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
 
   scheduler:
     volumes:
       - ../dbt_workflow:/usr/local/airflow/include/dbt_workflow:rw
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
+      - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
 
   triggerer:
     volumes:
       - ../dbt_workflow:/usr/local/airflow/include/dbt_workflow:rw
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
+      - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
 
   dag-processor:
     volumes:
       - ../dbt_workflow:/usr/local/airflow/include/dbt_workflow:rw
       - ../../data/:/usr/local/airflow/include/data:rw
       - ../../utils/ingestao_minio.py:/usr/local/airflow/ingestao_minio.py:rw
-
+      - ../dbt_workflow/datawarehouse/:/usr/local/airflow/datawarehouse/:rw
 
 

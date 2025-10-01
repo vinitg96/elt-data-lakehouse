@@ -12,7 +12,7 @@ client = Minio(endpoint=os.getenv("S3_ENDPOINT", "localhost:9000"),
 print(os.getenv("S3_ENDPOINT"))
 
 def copy_files():
-    PATH_DATA = Path("./data/")
+    PATH_DATA = Path("/usr/local/airflow/include/data/")
     for arquivo in PATH_DATA.rglob(pattern="*.csv"):
         try:
             if "crm" in str(arquivo).lower():
