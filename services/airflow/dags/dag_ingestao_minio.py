@@ -1,11 +1,7 @@
 from airflow.sdk import DAG, task
 from datetime import datetime
-#from airflow.providers.standard.operators.bash import BashOperator
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 
-
-# Sem imports problemáticos no nível do módulo
-
-# Configurações padrão do DAG
 args_ = {
     "owner": "Vinicius",
     "retries": 2
@@ -13,10 +9,11 @@ args_ = {
 
 with DAG(
     dag_id='extract_load_minio', 
-    start_date=datetime(2025, 9, 28), 
+    start_date=datetime(2025, 9, 30), 
     default_args=args_,
-    schedule=None,  # Mudou de schedule_interval para schedule
-    catchup=False
+    schedule="@once", 
+    catchup=True,
+    is_paused_upon_creation=False
 ) as dag:
 
     @task
@@ -38,7 +35,14 @@ with DAG(
         from ingestao_minio import copy_files
         copy_files()
         return "Ingestão concluída com sucesso"
+    
+    #acionar dag do dbt
+    trigger_next_dag = TriggerDagRunOperator(
+        task_id='trigger_transformation_dbt',
+        trigger_dag_id='transformation_dbt',
+        wait_for_completion=False
+    )
 
 
 
-    build_buckets() >> copy_files_minio()
+    build_buckets() >> copy_files_minio() >> trigger_next_dag
