@@ -1,16 +1,20 @@
 # Data Lakehouse Moderno
-Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boas práticas de engenharia de dados e ferramentas open source.
+Este projeto simula um ambiente moderno de Data Lakehouse em uma máquina local, permitindo estudar conceitos de ingestão, transformação (dbt), orquestração (Airflow) e visualização (Metabase).
+
+A stack é ideal para cenários de dados estáticos (sem necessidade de ingestão incremental) ou para a criação de provas de conceito (POCs) voltadas à exploração e análise de dados, antes de uma eventual migração para a nuvem.
+
+O pipeline segue a abordagem ELT (Extract, Load, Transform): os dados são extraídos e carregados no Lake (MinIO) e no Warehouse (DuckDB). As transformações são então aplicadas diretamente no DuckDB, com o dbt atuando como camada de orquestração e governança dos modelos SQL, seguindo a arquitetura em camadas (Bronze → Silver → Gold).
 # Arquitetura Local
 
 - MinIO → utilizado como storage simulando o papel de um Data Lake.
 
 - DuckDB → atua como data warehouse local e motor de processamento SQL.
 
-- dbt → responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (camadas Bronze → Silver → Gold).
+- dbt → responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
 
 - Metabase → ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
-- Airflow -> Orquestração
+- Airflow + Cosmos -> Orquestração
 
 - Docker -> Conteinerização dos serviços 
 
@@ -29,14 +33,20 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
    ```
    git clone https://github.com/vinitg96/elt-data-lakehouse.git
    cd elt-data-lakehouse
-2. Suba o airflow:
-    ```
-    make airflow
-3. Suba os demais serviços:
+   ```
+2. Suba os serviços do MinIO, Metabase e Postgres:
     ```
     make infra
-4. Execute as DAGs no airflow em http://localhost:8080
-    - Execute primeiro a DAG **extract_load_minio** e depois a DAG **transformation_dbt**
+    ```
+3. Suba o airflow:
+    ```
+    make airflow
+    ````
+
+4. Acesse o airflow em http://localhost:8080
+    - As DAGs **extract_load_minio** e **transformation_dbt** serão executadas automaticamente, com as dependências entre elas definidas pelo TriggerDagRunOperator.
+    - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
+    - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no gif abaixo.
 
 5. Acesse o Metabase em http://localhost:80
     - Na seção 4 do setup inicial ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** preencha o caminho **/app/datawarehouse/dw.duckdb**
@@ -49,7 +59,7 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 
 # Observações
 - O MinIO e o banco de aplicação do Metabase (postgres) fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com os containers sendo removidos ou desligados.
-- O duckdb não permite acessos simultaneos, logo, caso queira executar a DAG **transformation_dbt** uma segunda vez, é necessário desligar o container do metabase (metaduck)
+- O duckdb não permite acessos simultaneos, logo, caso queira executar a DAG **transformation_dbt**  após a configuração do metabase, é necessário desligar o container metaduck)
 
 # Próximos Passos
 - Implementar testes e documentação dos modelos SQL com o dbt
@@ -57,5 +67,5 @@ Este projeto demonstra um pipeline ELT em um Data Lakehouse local explorando boa
 - Migrar arquitetura para nuvem usando os seguintes serviços:
     - S3 como storage (lake)
     - Motherduck: substitui o duckDB como warehouse eliminando o problema da concorrencia
-    - EC2 para subir a aplicação final com o metabase e o worflow do dbt
+    - EC2 para subir o metabase
     - RDS como banco de aplicação do metabse, garantindo a persistencia
