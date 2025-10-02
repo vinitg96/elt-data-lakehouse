@@ -6,13 +6,13 @@ A stack é ideal para cenários de dados estáticos (sem necessidade de ingestã
 O pipeline segue a abordagem ELT (Extract, Load, Transform): os dados são extraídos e carregados no Lake (MinIO) e no Warehouse (DuckDB). As transformações são então aplicadas diretamente no DuckDB, com o dbt atuando como camada de orquestração e governança dos modelos SQL, seguindo a arquitetura em camadas (Bronze → Silver → Gold).
 # Arquitetura Local
 
-- MinIO → utilizado como storage simulando o papel de um Data Lake.
+- MinIO → Utilizado como storage simulando o papel de um Data Lake.
 
-- DuckDB → atua como data warehouse local e motor de processamento SQL.
+- DuckDB → Atua como data warehouse local e motor de processamento SQL.
 
-- dbt → responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
+- dbt → Responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
 
-- Metabase → ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
+- Metabase → Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
 - Airflow + Cosmos -> Orquestração
 
@@ -43,13 +43,18 @@ O pipeline segue a abordagem ELT (Extract, Load, Transform): os dados são extra
     make airflow
     ````
 
-4. Acesse o airflow em http://localhost:8080
+4. Acesse o Airflow em http://localhost:8080
     - As DAGs **extract_load_minio** e **transformation_dbt** serão executadas automaticamente, com as dependências entre elas definidas pelo TriggerDagRunOperator.
     - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
-    - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no gif abaixo.
+    - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no GIF abaixo.
+     
+![Airflow_UP](./misc/airflow_up_video.gif)
 
-5. Acesse o Metabase em http://localhost:80
-    - Na seção 4 do setup inicial ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** preencha o caminho **/app/datawarehouse/dw.duckdb**
+5. Acesse o Metabase em http://localhost:80 
+    - Na etapa 4 da criação do usuário ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** informe o caminho **/app/datawarehouse/dw.duckdb**
+    - Após a conexão ser estabelecida com sucesso, será possível interagir com as tabelas pelo Metabase, conforme demonstrado no GIF abaixo. 
+
+   
 ![Metabase UP](./misc/metabase_up_video.gif)
 
 6. O MiniIO console pode ser acessado em http://localhost:9001
