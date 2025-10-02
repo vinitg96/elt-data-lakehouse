@@ -20,10 +20,11 @@ _execute_file_config = ExecutionConfig(
 
 with DAG(
     dag_id="transformation_dbt",
-    schedule="@once",
+    schedule=None, # removi o @once pq ela deve ser acionada pela dag anterior. Antes era executada 2x
     start_date=datetime(2025, 9, 28),
     catchup=False,
     max_active_tasks=1,
+    max_active_runs=1,
     is_paused_upon_creation=False
 ) as dag:
     
