@@ -18,7 +18,7 @@ dbt_workflow:
         s3_region: 'us-east-1'
         s3_url_style: 'path'
         s3_use_ssl: false
-      threads: 4
+      threads: 1
 
     prod:
       type: duckdb
