@@ -1,10 +1,13 @@
 # Data Lakehouse Moderno
+
+![arquitetura Local](./misc/arquitetura_local.drawio.png)
+
 Este projeto simula um ambiente moderno de Data Lakehouse em execução local, permitindo estudar conceitos de ingestão, transformação (dbt), orquestração (Airflow) e visualização (Metabase).
 
 A stack é ideal para cenários de dados estáticos (sem necessidade de ingestão incremental) ou para a criação de provas de conceito (POCs) voltadas à exploração e análise de dados, antes de uma eventual migração para a nuvem.
 
 O pipeline segue a abordagem ELT (Extract, Load, Transform), onde:
-1. Os dados são extraídos das fontes (ERP e CRM) e carregados no Lake (armazenado no MinIO) via script Python;
+1. Os dados são extraídos das fontes (ERP e CRM) em formato csv e carregados no Lake (armazenado no MinIO) via script Python;
 
 2. O DuckDB atua como data warehouse local, conectando-se diretamente aos arquivos no Lake para consulta e processamento;
 
@@ -25,7 +28,12 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
 
 - **DuckDB**: Atua como um Data Warehouse local sendo responsável por processar as consultas SQL.
 
-- **dbt**: Responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
+- **dbt**: Responsável por gerenciar a transformação dos dados seguindo a arquitetura medalhão ilustrada abaixo.  
+  - **Bronze**: dados brutos, sem alterações e sem inferência de tipos.  
+  - **Silver**: dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.  
+  - **Gold**: dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).  
+
+    ![arquitetura medalhão](./misc/lineage_models_dbt.png)
 
 - **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
@@ -33,19 +41,6 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
 
 - **Docker**: Containeriza todos os serviços, garantindo reprodutibilidade, isolamento e fácil execução do ambiente.
 
-    ![arquitetura Local](./misc/arquitetura_local.drawio.png)
-
-# Transformação
-
-O lineage abaixo representa as etapas de transformações realizadas.
-
-- Camada Bronze: Dados brutos, sem alterações e sem inferência de tipos.
-
-- Camada Silver: Dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.
-
-- Camada Gold: Dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).
-
-![arquitetura medalhão](./misc/lineage_models_dbt.png)
 
 ## Como executar  
 
