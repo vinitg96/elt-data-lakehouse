@@ -1,24 +1,51 @@
 # Data Lakehouse Moderno
-Este projeto simula um ambiente moderno de Data Lakehouse em uma máquina local, permitindo estudar conceitos de ingestão, transformação (dbt), orquestração (Airflow) e visualização (Metabase).
+Este projeto simula um ambiente moderno de Data Lakehouse em execução local, permitindo estudar conceitos de ingestão, transformação (dbt), orquestração (Airflow) e visualização (Metabase).
 
 A stack é ideal para cenários de dados estáticos (sem necessidade de ingestão incremental) ou para a criação de provas de conceito (POCs) voltadas à exploração e análise de dados, antes de uma eventual migração para a nuvem.
 
-O pipeline segue a abordagem ELT (Extract, Load, Transform): os dados são extraídos e carregados no Lake (MinIO) e no Warehouse (DuckDB). As transformações são então aplicadas diretamente no DuckDB, com o dbt atuando como camada de orquestração e governança dos modelos SQL, seguindo a arquitetura em camadas (Bronze → Silver → Gold).
+O pipeline segue a abordagem ELT (Extract, Load, Transform), onde:
+1. Os dados são extraídos das fontes (ERP e CRM) e carregados no Lake (armazenado no MinIO) via script Python;
+
+2. O DuckDB atua como data warehouse local, conectando-se diretamente aos arquivos no Lake para consulta e processamento;
+
+3. O dbt direciona as transformações, utilizando a engine do warehouse (DuckDB) para processar as queries SQL. As transformações seguem a arquitetura em camadas: Bronze → Silver → Gold, garantindo rastreabilidade, qualidade e organização dos dados.
+
+
+# Contexto
+A empresa de e-commerce tem como objetivo integrar dados provenientes de duas origens distintas (CRM e ERP) para construir uma visualização unificada que consolide informações comerciais e operacionais.
+
+O sistema CRM concentra os dados relacionados a clientes, produtos e vendas, refletindo as interações comerciais e o desempenho de vendas da empresa.
+Já o sistema ERP armazena informações cadastrais complementares sobre clientes (como data de nascimento e gênero), dados geográficos e a estrutura hierárquica de categorias e subcategorias de produtos, que servem como base para análises de portfólio e segmentação de mercado.
+
+Essa integração visa enriquecer as análises de desempenho e comportamento do cliente, possibilitando uma visão 360° do negócio e apoiando a tomada de decisão estratégica.
+
 # Arquitetura Local
 
-- MinIO → Utilizado como storage simulando o papel de um Data Lake.
+- **MinIO**: Camada de armazenamento de objetos, simulando um Data Lake.  
 
-- DuckDB → Atua como data warehouse local e motor de processamento SQL.
+- **DuckDB**: Atua como um Data Warehouse local sendo responsável por processar as consultas SQL.
 
-- dbt → Responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
+- **dbt**: Responsável por direcionar a transformação dos dados seguindo a arquitetura medalhão em camadas (Bronze → Silver → Gold).
 
-- Metabase → Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
+- **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
-- Airflow + Cosmos -> Orquestração
+- **Airflow e Cosmos**: Gerenciam a orquestração do pipeline, com cada modelo SQL representando uma task.
 
-- Docker -> Conteinerização dos serviços 
+- **Docker**: Containeriza todos os serviços, garantindo reprodutibilidade, isolamento e fácil execução do ambiente.
 
     ![arquitetura Local](./misc/arquitetura_local.drawio.png)
+
+# Transformação
+
+O lineage abaixo representa as etapas de transformações realizadas.
+
+- Camada Bronze: Dados brutos, sem alterações e sem inferência de tipos.
+
+- Camada Silver: Dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.
+
+- Camada Gold: Dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).
+
+![arquitetura medalhão](./misc/lineage_models_dbt.png)
 
 ## Como executar  
 
@@ -64,7 +91,7 @@ O pipeline segue a abordagem ELT (Extract, Load, Transform): os dados são extra
 
 # Observações
 - O MinIO e o banco de aplicação do Metabase (postgres) fazem usos de volumes nomeados. Dessa forma os dados, configurações, queries, dashboards, etc irão persistir mesmo com os containers sendo removidos ou desligados.
-- O duckdb não permite acessos simultaneos, logo, caso queira executar a DAG **transformation_dbt**  após a configuração do metabase, é necessário desligar o container metaduck)
+- O duckdb não permite acessos simultaneos, logo, caso queira executar a DAG **transformation_dbt**  após a configuração do metabase, é necessário desligar o container metaduck
 
 # Próximos Passos
 - Implementar testes e documentação dos modelos SQL com o dbt
