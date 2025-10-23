@@ -37,7 +37,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
 
 - **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
-- **Airflow e Cosmos**: Gerenciam a orquestração do pipeline, com cada modelo SQL representando uma task.
+- **Airflow**: Gerencia a orquestração do pipeline.
 
 - **Docker**: Containeriza todos os serviços, garantindo reprodutibilidade, isolamento e fácil execução do ambiente.
 
