@@ -68,7 +68,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
 4. Acesse o Airflow em http://localhost:8080
     - As DAGs **extract_load_minio** e **transformation_dbt** serão executadas automaticamente, com as dependências entre elas definidas pelo TriggerDagRunOperator.
     - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
-    - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no GIF abaixo.
+    - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme imagem abaixo.
      
     ![Airflow_UP](./misc/airflow_cosmos.png)
 
