@@ -1,6 +1,6 @@
 # Data Lakehouse Moderno
 
-![arquitetura Local](./misc/arquitetura_local.drawio.png)
+![arquitetura Local](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/arquitetura_local.drawio.png)
 
 Este projeto simula um ambiente moderno de Data Lakehouse em execução local, permitindo estudar conceitos de ingestão, transformação (dbt), orquestração (Airflow) e visualização (Metabase).
 
@@ -33,7 +33,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
   - **Silver**: dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.  
   - **Gold**: dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).  
 
-- ![arquitetura medalhão](./misc/lineage_models_dbt.png)
+- ![arquitetura medalhão](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/lineage_models_dbt.png)
 
 - **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
@@ -69,14 +69,14 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
     - As DAGs **extract_load_minio** e **transformation_dbt** serão executadas automaticamente, com as dependências entre elas definidas pelo TriggerDagRunOperator.
     - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
     - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme imagem abaixo.
-     
-    ![Airflow_UP](./misc/airflow_cosmos.png)
+
+![Airflow_UP](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/airflow_up_video.gif)
 
 5. Acesse o Metabase em http://localhost:80 
     - Na etapa 4 da criação do usuário ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** informe o caminho **/app/datawarehouse/dw.duckdb**
-    - Após a conexão ser estabelecida com sucesso, será possível interagir com as tabelas pelo Metabase, conforme demonstrado no GIF abaixo. 
+    - Após a conexão ser estabelecida com sucesso, será possível interagir com as tabelas pelo Metabase, conforme demonstrado no GIF abaixo.
 
-   ![Metabase UP](./misc/metabase_up_video.gif)
+![Metabase UP](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/metabase_up_video.gif)
 
 6. O MiniIO console pode ser acessado em http://localhost:9001
     - usuario: minio123
