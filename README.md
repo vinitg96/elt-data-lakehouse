@@ -33,7 +33,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
   - **Silver**: dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.  
   - **Gold**: dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).  
 
-    ![arquitetura medalhão](./misc/lineage_models_dbt.png)
+- ![arquitetura medalhão](./misc/lineage_models_dbt.png)
 
 - **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
@@ -70,7 +70,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
     - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
     - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no GIF abaixo.
      
-  ![Airflow_UP](./misc/airflow_up_video.gif)
+    ![Airflow_UP](./misc/airflow_cosmos.png)
 
 5. Acesse o Metabase em http://localhost:80 
     - Na etapa 4 da criação do usuário ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** informe o caminho **/app/datawarehouse/dw.duckdb**
