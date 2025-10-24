@@ -70,14 +70,13 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
     - Aguarde a conclusão da DAG **transformation_dbt**. Ao final da execução, será gerado o arquivo **dw.duckdb** no diretório **./services/dbt_workflow/datawarehouse/.**
     - Um detalhe interessante é que o pacote [Cosmos](https://github.com/astronomer/astronomer-cosmos) permite visualizar cada modelo SQL definido no dbt como uma task, conforme ilustrado no GIF abaixo.
      
-![Airflow_UP](./misc/airflow_up_video.gif)
+  ![Airflow_UP](./misc/airflow_up_video.gif)
 
 5. Acesse o Metabase em http://localhost:80 
     - Na etapa 4 da criação do usuário ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** informe o caminho **/app/datawarehouse/dw.duckdb**
     - Após a conexão ser estabelecida com sucesso, será possível interagir com as tabelas pelo Metabase, conforme demonstrado no GIF abaixo. 
 
-   
-![Metabase UP](./misc/metabase_up_video.gif)
+   ![Metabase UP](./misc/metabase_up_video.gif)
 
 6. O MiniIO console pode ser acessado em http://localhost:9001
     - usuario: minio123
