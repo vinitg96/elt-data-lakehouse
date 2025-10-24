@@ -33,7 +33,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
   - **Silver**: dados limpos e padronizados; valores inconsistentes corrigidos, datas e tipos ajustados, códigos e categorias normalizados.  
   - **Gold**: dados agregados e refinados, voltados ao negócio. Modelos em star schema: 2 tabelas dimensões (clientes e produtos) e 1 fato (vendas).  
 
- ![arquitetura medalhão](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/lineage_models_dbt.png)
+ ![arquitetura medalhão](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/lineage_models_dbt_otimizado.png)
 
 - **Metabase**: Ferramenta de self-service BI, possibilitando a exploração e visualização dos dados refinados.
 
