@@ -76,7 +76,7 @@ Essa integração visa enriquecer as análises de desempenho e comportamento do 
     - Na etapa 4 da criação do usuário ("Adicione seus Dados"), busque por DuckDB e no campo **"Database File"** informe o caminho **/app/datawarehouse/dw.duckdb**
     - Após a conexão ser estabelecida com sucesso, será possível interagir com as tabelas pelo Metabase, conforme demonstrado no GIF abaixo.
 
-![Metabase UP](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/metabase_up_video.gif)
+![Metabase UP](https://cdn.jsdelivr.net/gh/vinitg96/elt-data-lakehouse@main/misc/metabase_up_video_otimizado.gif)
 
 6. O MiniIO console pode ser acessado em http://localhost:9001
     - usuario: minio123
